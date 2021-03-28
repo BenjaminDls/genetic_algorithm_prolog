@@ -43,13 +43,13 @@ param(fArret, arretParCompteur).
 param(fArret_CptMax, 2). %PAS UTILISE. Au cas o� on voudrait �viter de passer CptMax en argument du 'go'
                          %Ici,on fera 2 tours de boucle.
 param(fEvaluation,fEval).
-param(fSelectionPourReproduction,selectionDeterministe).
-param(fSelectionPourRemplacement,selectionDeterministeBis).
+param(fSelectionPourReproduction,selectionDeterministe). % ou selectionTournois
+param(fSelectionPourRemplacement,selectionDeterministeBis). % ou selectionTournoisBis
 param(fMutation,mutationEchange).% ou mutationAdjacence
 param(fCroisement,croisementUniforme).
 param(taillePopulation,10). % N individus dans la population
 param(tailleSelect,10).     % K individus parents, qui donneront K enfants
-param(tailleIndividu,29).   % Nombre de villes � parcourir (taille de la matrice ?)
+param(tailleIndividu,16).   % Nombre de villes � parcourir (taille de la matrice ?)
 
 %***************************************************
 % Lancement global
@@ -78,12 +78,13 @@ go(CptMax):-
     format("Population initiale:"),nl,
     print(PopInit),nl,
     format("Clacul en cours..."),nl,
-    algoGen(PopInit,[i(Cout,MeilleurParcours)|PopFinale]),
+    algoGen(PopInit,PopFinale),
+    sort(PopFinale, [i(Cout,MeilleurParcours)|PopFinaleSorted]),
     format("Cout du meilleur parcours calculé: ~d",[Cout]),nl,
     format("Meilleur parcours calculé:"),
     print(MeilleurParcours),nl,
     format("Autres parcours interessants calculés :"),nl,
-    print(PopFinale),!.
+    print(PopFinaleSorted),!.
 
 %***************************************************
 %FIN de lancement global

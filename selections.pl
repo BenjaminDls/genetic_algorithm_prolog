@@ -58,3 +58,53 @@ selectionDeterministeBis(N,PopulationEval, KenfantsEval,NewPopulationEval):-
 %************************************************************************************
 %****************FIN  fonction  s�lection pour remplacement: selectionDeterministeBis
 %************************************************************************************
+
+
+%************************************************************************************
+%****************DEBUT fonction  s�lection pour remplacement: selectionTournois *****
+%************************************************************************************
+% selectionTournois(+K,+PopulationEval,-KParentsSelectionnesEval)
+%%% | ?- selectionTournois(2,[i(27,[1,2,3,4,5]),i(27,[5,4,3,2,1]),i(20,[1,2,5,4,3]),i(28,[1,3,5,2,4])], Resul).
+%%% Resul = [i(20,[1,2,5,4,3]), i(28,[1,3,5,2,4])].
+selectionTournois(0, _, []):-!.
+selectionTournois(_, [], []):-!.
+selectionTournois(K,PopulationEval,KParentsSelectionnesEval):-
+	KPP is K + 1,
+	random(1, KPP, NombreQualifies),
+	KMM is K - 1,
+	tournois(PopulationEval, NombreQualifies, Gagnant),
+	delete(PopulationEval, Gagnant, PopulationEvalBis),
+	selectionTournois(KMM, PopulationEvalBis,KParentsSelectionnesEvalBis),
+	KParentsSelectionnesEval = [Gagnant|KParentsSelectionnesEvalBis],!.
+
+
+tournois(PopulationEval, NombreQualifies, Gagnant):-
+	tournoisRec(PopulationEval, NombreQualifies, ListeParticipants),
+	sort(ListeParticipants, [Gagnant|_]).
+
+tournoisRec(_,0,[]):-!.
+tournoisRec([],_,[]):-!.
+tournoisRec(PopulationEval, NombreQualifies, ListeParticipants):-
+	random_member(M, PopulationEval),
+	delete(PopulationEval, M, PopBis),
+	NombreMM is NombreQualifies - 1,
+	tournoisRec(PopBis, NombreMM, ListeParticipantsBis),
+	ListeParticipants = [M|ListeParticipantsBis],!.
+
+%************************************************************************************
+%****************FIN fonction  s�lection pour remplacement: selectionTournois *******
+%************************************************************************************
+
+%************************************************************************************
+%****************DEBUT fonction  s�lection pour remplacement: selectionTournoisBis **
+%************************************************************************************
+%selectionTournoisBis(+N,+PopulationEval, +KenfantsEval,-NewPopulationEval)
+% | ?- selectionTournoisBis(3,[i(27,[1,2,3,4,5]),i(27,[5,4,3,2,1])],[i(28,[1,3,5,2,4]),i(20,[1,2,5,4,3])], R).
+% R = [i(27,[5,4,3,2,1]), i(20,[1,2,5,4,3]), i(28,[1,3,5,2,4])].
+selectionTournoisBis(0,_, KenfantsEval,KenfantsEval):-!.
+selectionTournoisBis(N,PopulationEval, KenfantsEval,NewPopulationEval):-
+    append(PopulationEval,KenfantsEval,Concat),
+    selectionTournois(N, Concat, NewPopulationEval).
+%************************************************************************************
+%****************FIN fonction  s�lection pour remplacement: selectionTournoisBis ****
+%************************************************************************************

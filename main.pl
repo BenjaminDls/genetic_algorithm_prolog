@@ -77,7 +77,7 @@ go(CptMax):-
     %PopInit = [i(11708,[9,5,12,14,7,13,11,15,4,1,6,10,3,8,16,2]),i(14645,[7,6,4,9,16,10,14,11,8,5,13,2,12,15,1,3]),i(13687,[13,15,11,2,7,12,1,4,6,10,8,16,5,9,14,3]),i(13092,[8,14,9,12,3,15,13,7,6,5,16,10,1,11,4,2]),i(7326,[1,14,13,12,7,6,15,5,11,9,10,16,4,8,3,2])],
     format("Population initiale:"),nl,
     print(PopInit),nl,
-    format("Clacul en cours..."),nl,
+    format("Calcul en cours..."),nl,
     algoGen(PopInit,PopFinale),
     sort(PopFinale, [i(Cout,MeilleurParcours)|PopFinaleSorted]),
     format("Cout du meilleur parcours calculé: ~d",[Cout]),nl,

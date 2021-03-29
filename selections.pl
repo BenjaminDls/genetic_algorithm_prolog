@@ -76,12 +76,10 @@ selectionTournois(K,PopulationEval,KParentsSelectionnesEval):-
 	delete(PopulationEval, Gagnant, PopulationEvalBis),
 	selectionTournois(KMM, PopulationEvalBis,KParentsSelectionnesEvalBis),
 	KParentsSelectionnesEval = [Gagnant|KParentsSelectionnesEvalBis],!.
-
-
+% sous predicats du tournois
 tournois(PopulationEval, NombreQualifies, Gagnant):-
 	tournoisRec(PopulationEval, NombreQualifies, ListeParticipants),
 	sort(ListeParticipants, [Gagnant|_]).
-
 tournoisRec(_,0,[]):-!.
 tournoisRec([],_,[]):-!.
 tournoisRec(PopulationEval, NombreQualifies, ListeParticipants):-

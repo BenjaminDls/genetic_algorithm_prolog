@@ -1,10 +1,5 @@
-% MAJ: 23  mars 2021
+% MAJ: 29 mars 2021
 % BENJAMIN DANLOS & RIDA GHOUTI TERKI
-%%% export PATH=/Applications/SWI-Prolog.app/Contents/MacOS:$PATH
-%%% swipl tp7_AG_TROUS.pl
-
-% TODO : rapport
-% TODO : ajouter autres croisements et selections (tournois...)
 
 % TP ag � trous pour TP7 et 8
 %prolog_flag(toplevel_print_options,Val).
@@ -137,6 +132,10 @@ mutationEtCroisementL(Parents , Enfants):-
 %*****************************************************
 %************* DEBUT predicats outils ****************
 %*****************************************************
+% createIntervalle(-Liste)
+% Produit une liste ordonnée d'entiers naturels de 1 à tailleIndividu
+createIntervalle(Liste):-
+  createIntervalle(1,Liste),!.
 createIntervalle(Start,Liste):-
   param(tailleIndividu, M),
   Start=M,
@@ -147,9 +146,9 @@ createIntervalle(Start, Liste):-
   IPP is Start + 1,
   createIntervalle(IPP, ListeBis),
   Liste = [Start|ListeBis],!.
-createIntervalle(Liste):-
-  createIntervalle(1,Liste),!.
 
+% mixIntervalle(-Pop)
+% Produit une liste d'entiers naturels mélangés aléatoirement
 mixIntervalle(Pop):-
   createIntervalle(Intervalle),
   mixIntervalle(Intervalle, Pop),!.
@@ -160,47 +159,28 @@ mixIntervalle(Intervalle, Pop):-
   mixIntervalle(IntervalleBis, PopBis),
   Pop = [R|PopBis],!.
 
-
+% generateIndividuEvalue(-Indiv)
+% Produit un parcours (individu) aléatoire et évalué
 generateIndividuEvalue(Indiv):-
   mixIntervalle(Parours),
   fEval(Parours, Cout),
   Indiv = i(Cout, Parours),!.
-%generateIndividuEvalue(Indiv):-
-  %param(tailleIndividu, Nombre),
-  %generateIndividuEvalue(Nombre, IndivNonEval),
-  %fEval(IndivNonEval,Cout), %cout algorithmique pas important meme sur matrice de 16
-  %Indiv = i(Cout, IndivNonEval).
 
-%generateIndividuEvalue(1, [R]):-
-  %param(tailleIndividu, Max),
-  %BorneSup is Max + 1,
-  %random(1, BorneSup, R),!.
-
-%generateIndividuEvalue(Nombre, Indiv):-
-  %param(tailleIndividu, Max),
-  %NombreMM is Nombre - 1,
-  %generateIndividuEvalue(NombreMM, IndivBis),
-  %BorneSup is Max + 1,
-  %random(1, BorneSup, Ville),
-  %eviter que la ville tirée au sort soit deja dans le parcours
-  % COUT ALGORITHMIQUE IMPORTANT A CAUSE DU RANDOM
-  %(member(Ville, IndivBis)->generateIndividuEvalue(Nombre,Indiv);Indiv = [Ville|IndivBis]).
-
+% generatePopulationEvaluee(-Pop)
+% Produit une population aléatoire d'une taille égale à taillePopulation
 generatePopulationEvaluee(Pop):-
   param(taillePopulation, Max),
   generatePopulationEvaluee(Max, Pop).
-
 generatePopulationEvaluee(1,[Pop]):-
   generateIndividuEvalue(Pop),!.
-
 generatePopulationEvaluee(Nombre, Pop):-
   NombreMM is Nombre - 1,
   generatePopulationEvaluee(NombreMM, PopBis),
   generateIndividuEvalue(Indiv),
   Pop = [Indiv|PopBis].
 
-
 % generateRandomPositions(-P1, -P2).
+% Prduit deux nombres aléatoires et s'assure que P1<P2
 generateRandomPositions(P1, P2):-
     param(tailleIndividu,Max),
     MaxPP is Max + 1,

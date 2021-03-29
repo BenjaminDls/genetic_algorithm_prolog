@@ -18,19 +18,7 @@ mutationL([K1,K2,K3|KParents], KMutes):-
 mutation(I1, Imuter):-
     param(fMutation, FMutation),
     But=..[FMutation,I1,Imuter],
-    %format("But à executer : ~p",[But]),nl,
     But.
-%mutation(I1, Imuted):-
-%    param(fMutation, mutationAdjacence),
-%    mutationAdjacence(I1, Imuted),!.
-%mutation(I1, Imuted):-
-%    param(fMutation, mutationEchange),
-%    mutationEchange(I1, Imuted),!.
-
-
-
-%      MUTATIONS ADJACENCES CASSÉ
-
 
 
 %************************************************
@@ -99,7 +87,6 @@ mutationAdjacence(Liste, P1, P2, Res):-
 %%% Position P1 et P2 (...): 2 5
 %%% M = [1,5,3,4,2,6,7,8,9,10] ?
 mutationEchange(Liste, Res):-
-    %param(taillePopulation,Max),
     generateRandomPositions(P1, P2),
     mutationEchange(Liste, P1, P2, Res).
 mutationEchange(Liste, P1, P2, Res):-

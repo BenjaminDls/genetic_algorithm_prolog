@@ -24,6 +24,7 @@
 :-consult('selections.pl').
 :-consult('mutations.pl').
 :-consult('masques.pl').
+:-consult('tests.pl').
 
 
 :- dynamic  decompteurArret/1.	%decompte dynamique pour farret: arretParCompteur

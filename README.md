@@ -12,11 +12,11 @@ Mutation :
 
 Sélection remplacement :
  - élitisme (ou déterministe)
- - *tournois*
+ - tournois
 
 Sélection reproduction :
  - élitisme (ou déterministe)
- - *tournois*
+ - tournois
 
 Croisement :
  - uniforme
@@ -42,3 +42,7 @@ Une fois [SWI-Prolog](https://www.swi-prolog.org/) installé, il suffit de rentr
 
 ### Exemple d'execution
 ![run.gif](images/run.gif)
+
+### Tests
+Des tests peuvent être lancés avec le prédicat `tests/0` pour lancer successivement avec tous les différents paramètres disponibles. Ces tests affichent les solutions calculées, les paramètres utilisés et le temps d'execution :
+![test](images/tests.png)

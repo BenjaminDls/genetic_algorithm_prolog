@@ -99,7 +99,6 @@ testTTAU(PopInit):-
   retract(param(fMutation,_)),assertz(param(fMutation, mutationAdjacence)),
   retract(param(fCroisement,_)),assertz(param(fCroisement, croisementUniforme)),
   statistics(walltime, _),
-  param(fSelectionPourRemplacement, P),
   algoGen(PopInit,PopFinale),
   statistics(walltime, [_|[ExecutionTime]]),
   sort(PopFinale, PopFinaleSorted),
